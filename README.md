@@ -36,7 +36,7 @@ Admin Role
    Remove inappropriate or spam items
    Lightweight admin panel for oversight
 
-Mockup Link: https://app.excalidraw .com/l/65VNwvy7c4X/zEqG7IJrg0
+Mockup Link: https://app.excalidraw.com/l/65VNwvy7c4X/zEqG7IJrg0
 
 
 Team:
