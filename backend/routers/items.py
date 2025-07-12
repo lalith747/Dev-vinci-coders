@@ -11,18 +11,39 @@ swap_requests = [
         "requesting_user": "mock_user",
         "message": "Interested in swapping this item!",
         "status": "pending"
+    },
+    {
+        "request_id": 2,
+        "item_id": 2,
+        "requesting_user": "demo_alice",
+        "message": "Can we swap for your jacket?",
+        "status": "accepted"
     }
 ]
 
 @router.post("/", status_code=201)
 def create_item(item: ItemCreate):
     # Mocked item creation
-    return {
-        "id": 1,
+    new_item_id = max([i['item_id'] for i in swap_requests], default=0) + 1
+    item_obj = {
+        "id": new_item_id,
         "name": item.name if hasattr(item, 'name') else "mock item",
         "description": getattr(item, 'description', 'mock description'),
         "owner_id": 1,
         "message": "Item created (mock)"
+    }
+    # Immediately create a swap request for this item
+    swap_request = {
+        "request_id": len(swap_requests) + 1,
+        "item_id": new_item_id,
+        "requesting_user": "auto_demo_user",
+        "message": f"Auto swap request for {item_obj['name']}",
+        "status": "pending"
+    }
+    swap_requests.append(swap_request)
+    return {
+        "item": item_obj,
+        "swap_request": swap_request
     }
 
 @router.post("/{item_id}/swap_request", status_code=201)
